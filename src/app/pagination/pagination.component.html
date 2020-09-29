@@ -1,0 +1,19 @@
+<div *ngIf="pageCount1 > 1" style="float:right;">
+  <ul *ngIf="pageCount1 && pageCount1" class="pagination" >
+    <li *ngIf="currentPage1!==1">
+        <a (click)="call_page(1)">First</a>
+    </li>
+    <li  *ngIf="currentPage1 !== 1">
+        <a (click)="call_page(currentPage1 - 1)" >Previous</a>
+    </li>
+    <li *ngFor="let page of total" >
+      <a  [ngClass]="(currentPage1 == page)?'active-pagination':''">{{page}}</a>
+    </li>
+    <li  *ngIf="currentPage1 !== pageCount1">
+        <a (click)="call_page(currentPage1 + 1)">Next</a>
+    </li>
+    <li *ngIf="currentPage1 !== pageCount1">
+        <a (click)="call_page(pageCount1)">Last</a>
+    </li>
+  </ul>
+  </div>

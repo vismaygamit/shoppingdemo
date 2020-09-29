@@ -1,0 +1,218 @@
+<div class="pcoded-content">
+
+  <div class="page-header card">
+  <div class="row align-items-end">
+  <div class="col-lg-8">
+  <div class="page-header-title">
+  <i class="feather icon-home bg-c-blue"></i>
+  <div class="d-inline">
+  <h5>Product Details</h5>
+  </div>
+  </div>
+  </div>
+  <div class="col-lg-4">
+  <div class="page-header-breadcrumb">
+  <ul class=" breadcrumb breadcrumb-title">
+  <li class="breadcrumb-item">
+  <a href="index.html"><i class="feather icon-home"></i></a>
+  </li>
+  <li class="breadcrumb-item"><a href="#!">Product Details</a> </li>
+  </ul>
+  </div>
+  </div>
+  </div>
+  </div>
+
+  <div class="pcoded-inner-content">
+  <div class="main-body">
+  <div class="page-wrapper">
+  <div class="page-body">
+    <div class="row">
+
+      <div class="col-md-11 form-group">
+        <form #search="ngForm" (ngSubmit)="onFilter(search)">
+          <div class="row">
+            <div class="col-md-10">
+        <input class="form-control" type="text" name="search" ngModel  #search="ngModel" placeholder="Search" >
+
+            </div>
+            <div class="col-md-1">
+              <button type="submit" class="btn btn-primary waves-effect waves-light">Search</button>
+            </div>
+            <div class="col-md-1">
+              <button type="button" (click)="getproducts()" class="btn btn-primary waves-effect waves-light">Reset</button>
+            </div>
+          </div>
+
+      </form>
+      </div>
+
+      <div class="col-md-1">
+        <button type="button" (click)="clear()" class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#large-Modal">Add Product</button>
+      </div>
+
+    </div>
+    <div class="row">
+      <!-- <mat-card *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center">
+        <mat-progress-spinner
+          color="primary"
+          mode="indeterminate">
+        </mat-progress-spinner>
+      </mat-card> -->
+
+      <!-- <div *ngIf="isLoading"> -->
+
+        <ngx-spinner
+       bdColor = "rgba(239,240,240,0.64)" size = "large" color = "#3fbad7" type = "ball-scale-ripple" [fullScreen] = "false"><p style="color: white" > Loading... </p>
+      </ngx-spinner>
+       <!-- </div> -->
+
+
+      <div class="dt-responsive table-responsive">
+        <!-- <span>{{ (users | json) }}</span> -->
+      <!-- <mat-accordion> -->
+        <table id="search-api" class="table table-striped table-bordered nowrap">
+        <thead>
+        <tr>
+          <th>SR. NO</th>
+        <th>Product Name</th>
+        <th >Description</th>
+        <th >Image</th>
+        <th >Price</th>
+        <th >Action</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="!products"><td colspan="5" class="text-center">No Data available</td></tr>
+
+<tr *ngIf="isLoading"><td colspan="5" style="padding: 45px;" class="text-center"><div class="spinner"></div></td></tr>
+
+        <tr *ngFor="let val of products;let i=index">
+          <td>{{ (currentPage - 1) *  productsPerPage + i+1 }}</td>
+
+          <td>{{val.name}}</td>
+<td>{{val.description}}</td>
+<td>
+  <img class="image-preview" [src]="val.image" [alt]="form.value.title">
+</td>
+<td>{{val.price}}</td>
+<td>
+  <button class="btn btn-danger" (click)="onDelete(val._id)">
+    <i class="fa fa-trash"></i>
+</button>
+<button style="margin-left: 10%;" class="btn btn-primary" (click)="onEdit(val)">
+  <i class="fa fa-pencil-square-o"></i>
+</button>
+
+</td>
+
+        </tr>
+           </tbody>
+           <tfoot>
+             <tr>
+              <th>SR. NO</th>
+              <th>Product Name</th>
+              <th >Description</th>
+              <th >Image</th>
+              <th >Price</th>
+              <th >Action</th>
+            </tr>
+             </tfoot>
+          </table>
+
+
+
+        <!-- </mat-accordion> -->
+        <mat-paginator [length]="totalProducts" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)"></mat-paginator>
+        <!-- <app-pagination [pageCount1] ="usersPerPage" [currentPage1]="currentPage" (callPerent)="parentEvent($event)" ></app-pagination> -->
+
+        </div>
+      </div>
+
+
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+
+
+    <div class="modal fade" id="large-Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+                  <h3 class="modal-title" style="padding-left:40%;">Add Product</h3>
+
+              <button type="button" (click)="clear()" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <!-- <form role="form" method="post" action="<?php echo site_url("Creators/onSubmit"); ?>" enctype="multipart/form-data"> -->
+
+          <form role="form" method="post"[formGroup]="form" (submit)="onAddproduct()" id="uploadform" enctype="multipart/form-data">
+          <div class="modal-body">
+            <div id="container-fluid">
+              <div id="formBody">
+                <div id="loginForm">
+                  <div class="form-group">
+                    <label for="title" class="col-form-label">Product Name:</label><span style="color:red">*</span>
+                    <input type="text" class="form-control" formControlName="productname" name="txtproname" placeholder="Product" required>
+                    <span style="color:red" id="errtitle"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="title">Description:</label>
+                    <input type="text" class="form-control" formControlName="txtdesc" name="txtdesc" placeholder="Description">
+                  </div>
+
+
+                  <div class="form-group">
+                    <label for="title">Category:</label>
+                    <select formControlName="categoryname" class="form-control">
+                      <option id="0" value="0">--Select Category--</option>
+                      <option value="{{val.id}}" id="{{val.id}}" *ngFor="let val of categories" >{{val.name}}</option>
+
+                    </select>
+
+                  </div>
+                  <!-- <ng-select [items]="items"
+
+                  class="form-control"
+                  formControlName="categoryname"
+                  bindLabel="name"
+                  bindValue="id"
+                  appendTo="body"
+                  [(ngModel)]="selected">
+       </ng-select> -->
+
+                  <div class="form-group">
+                    <label for="thumbnail">Image:</label><span style="color:red;padding-left:160px;">Allow Only .png,.jpeg,.jpg file</span>
+                    <input type="file" class="form-control" (change)="onImagePicked($event)" placeholder="thumbnail" accept="image/*">
+                    <div class="image-preview" *ngIf="imagePreview!=='' && imagePreview && form.get('image').valid">
+                      <img [src]="imagePreview" [alt]="form.value.title">
+                              </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="title">Quantity:</label><span style="color:red">*</span>
+                    <input type="text" class="form-control" formControlName="txtqty" name="txtqty" placeholder="Quantity" required>
+                    <span style="color:red" id="errtitle"></span>
+                  </div>
+                  <div class="form-group">
+                    <label for="title">Price:</label>
+                    <input type="text" class="form-control" formControlName="txtprice" name="txtprice" placeholder="Price">
+                  </div>
+                  <div class="form-group">
+                    <label for="title">Discount:</label>
+                    <input type="text" class="form-control" formControlName="txtdiscount" name="txtdiscount" placeholder="Discount">
+                    <input type="hidden" formControlName="pid" name="pid">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+          </form>
+         </div>
+      </div>
+    </div>

@@ -1,0 +1,154 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "shoppingdemo": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/shoppingdemo",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "./src/assets/css/bootstrap.min.css",
+              "./src/assets/css/waves.min.css",
+              "./src/assets/css/feather.css",
+              "./src/assets/css/font-awesome-n.min.css",
+              "./src/assets/css/font-awesome.min.css",
+              "./src/assets/css/icofont.css",
+              "./src/assets/css/chartist.css",
+              "./src/assets/css/style.css",
+              "./src/assets/css/pages.css",
+              "./src/assets/css/widget.css"
+            ],
+            "scripts": [
+              "./src/assets/js/jquery.min.js",
+              "./src/assets/js/jquery-ui.min.js",
+              "./src/assets/js/popper.min.js",
+              "./src/assets/js/bootstrap.min.js",
+              "./src/assets/js/waves.min.js",
+              "./src/assets/js/icon-modal.js",
+              "./src/assets/js/jquery.slimscroll.js",
+              "./src/assets/js/jquery.flot.js",
+              "./src/assets/js/jquery.flot.categories.js",
+              "./src/assets/js/curvedlines.js",
+              "./src/assets/js/jquery.flot.tooltip.min.js",
+              "./src/assets/js/chartist.js",
+              "./src/assets/js/amcharts.js",
+              "./src/assets/js/serial.js",
+              "./src/assets/js/light.js",
+              "./src/assets/js/pcoded.min.js",
+              "./src/assets/js/vertical-layout.min.js",
+              "./src/assets/js/custom-dashboard.min.js",
+              "./src/assets/js/script.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "shoppingdemo:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "shoppingdemo:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "shoppingdemo:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.css"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "shoppingdemo:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "shoppingdemo:serve:production"
+            }
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "shoppingdemo"
+}

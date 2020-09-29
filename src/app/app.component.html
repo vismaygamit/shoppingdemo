@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>Admin</title>
+
+
+
+<meta charset="utf-8">
+
+</head>
+<body>
+
+  <div class="loader-bg">
+<div class="loader-bar"></div>
+</div>
+
+<div id="pcoded" class="pcoded">
+<div class="pcoded-container navbar-wrapper">
+
+
+<app-header></app-header>
+
+
+
+<div class="pcoded-main-container">
+<div class="pcoded-wrapper">
+
+
+  <!-- *ngIf="currentpath!='/login' && currentpath!='/signup'" -->
+  <!-- *ngIf="userIsAuthenticated" -->
+<app-sidebar></app-sidebar>
+<router-outlet></router-outlet>
+
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+</body>
+
+</html>
+
+
+
